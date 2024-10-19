@@ -12,7 +12,7 @@ phases:
 
   pre_build:
     commands:
-      - sonar-scanner -Dsonar.organization=Isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=072cb06e466b818bbe1555ef40579f0b05672b04
+      - sonar-scanner -x -Dsonar.organization=Isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=072cb06e466b818bbe1555ef40579f0b05672b04
 
   build:
     commands:

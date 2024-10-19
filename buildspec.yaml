@@ -1,3 +1,5 @@
+version: 0.2
+
 phases:
   install:
     runtime-versions:
@@ -10,12 +12,14 @@ phases:
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
       - unzip ./sonar-scanner-cli-3.3.0.1492-linux.zip
       - export PATH=$PATH:./sonar-scanner-3.3.0.1492-linux/bin/
+
   pre_build:
     commands:
-      - sonar-scanner -X -Dsonar.organization="isaacbrownn" -Dsonar.projectKey="Isaacbrownn_SONAR" -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login="072cb06e466b818bbe1555ef40579f0b05672b04"
+      - sonar-scanner -Dsonar.organization=Isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=072cb06e466b818bbe1555ef40579f0b05672b04
       - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey="Isaacbrownn_SONAR" > analysis.json
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=Isaacbrownn_SONAR > analysis.json
       - cat analysis.json
+
   build:
     commands:
       - echo Building Project

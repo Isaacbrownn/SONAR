@@ -1,24 +1,12 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      dotnet: 8.0 # Adjust based on your SDK version
-    commands:
-      - echo Installing dependencies...
-      - dotnet restore
-
   pre_build:
     commands:
       - echo Starting SonarCloud analysis...
       - sleep 5  # Optional: Wait for 5 seconds before proceeding
 
   build:
-    commands:
-      - echo Building the project...
-      - dotnet build --configuration Release
-
-  post_build:
     commands:
       - echo Running SonarCloud analysis...
       - sonar-scanner -X -Dsonar.organization=isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=aedbc73ac39c1f6003dcfd993ff7d9bb46f22ae54

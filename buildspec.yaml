@@ -18,7 +18,7 @@ phases:
     commands:
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=Isaacbrownn_SONAR > analysis.json
       - cat analysis.json
-  postbuild:
+  post_build:
     commands:
       - echo Building Project
       - echo Finished Building

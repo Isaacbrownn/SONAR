@@ -3,28 +3,21 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 10
+      java: corretto17  # Install Amazon Corretto 17 (Java 17)
     commands:
-      - apt-get update
-      - apt-get install -y jq
-      - apt-get install -y openjdk-17-jre  # Install Java 17
-      - java -version  # Verify the correct Java version is installed
+      - java -version  # Check installed Java version
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
-      - unzip ./sonar-scanner-cli-3.3.0.1492-linux.zip
+      - unzip sonar-scanner-cli-3.3.0.1492-linux.zip
       - export PATH=$PATH:./sonar-scanner-3.3.0.1492-linux/bin/
 
   pre_build:
     commands:
       - sonar-scanner -Dsonar.organization=Isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=072cb06e466b818bbe1555ef40579f0b05672b04
-      - sleep 5
-      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=Isaacbrownn_SONAR > analysis.json
-      - cat analysis.json
 
   build:
     commands:
-      - echo Building Project
-      - echo Finished Building
+      - echo Build completed
 
 cache:
   paths:
-    - "node_modules/**/*"
+    - sonar-scanner-3.3.0.1492-linux/

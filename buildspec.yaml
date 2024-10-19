@@ -3,12 +3,12 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto17  # Install Amazon Corretto 17 (Java 17)
+      java: corretto17  # Use Amazon Corretto 17 (Java 17)
     commands:
-      - java -version  # Check installed Java version
-      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
-      - unzip sonar-scanner-cli-3.3.0.1492-linux.zip
-      - export PATH=$PATH:./sonar-scanner-3.3.0.1492-linux/bin/
+      - java -version  # Verify Java version
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+      - unzip sonar-scanner-cli-4.8.0.2856-linux.zip
+      - export PATH=$PATH:./sonar-scanner-4.8.0.2856-linux/bin/
 
   pre_build:
     commands:
@@ -20,4 +20,4 @@ phases:
 
 cache:
   paths:
-    - sonar-scanner-3.3.0.1492-linux/
+    - sonar-scanner-4.8.0.2856-linux/

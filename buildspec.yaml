@@ -15,7 +15,7 @@ phases:
 
   pre_build:
     commands:
-      - sonar-scanner -X -Dsonar.organization=Isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=aedbc73ac39c1f6003dcfd993ff7d9bb46f22ae54
+      - sonar-scanner -X -Dsonar.organization=isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=aedbc73ac39c1f6003dcfd993ff7d9bb46f22ae54
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=Isaacbrownn_SONAR > analysis.json
       - cat analysis.json

@@ -3,27 +3,22 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto17 # Ensure you're using Java 17
+      nodejs: 14  # Keep Node.js version as is
     commands:
-      - echo "Installing dependencies..."
-      - mvn install # Adjust if you're using a different build tool
-  pre_build:
-    commands:
-      - echo "Running SonarCloud analysis..."
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip  # Updated to a compatible version
+      - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+      - export PATH=$PATH:/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner-cli
+
   build:
     commands:
-      - echo "Building the project..."
-      - mvn package # Adjust if you're using a different build tool
-      - echo "Running SonarCloud scanner..."
-      - sonar-scanner -X -Dsonar.organization=isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN # Use environment variable for security
-  post_build:
+      - echo Logging in to SonarCloud..... 
+      - ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -X --define sonar.organization=isaacbrownn --define sonar.projectKey=Isaacbrownn_SONAR  --define sonar.host.url=https://sonarcloud.io --define sonar.token=6afb9f9bdf23103c6c38c12300ceea40001d2ae2
+      - cat analysis.json
+       post build:
     commands:
-      - echo "Build completed."
+      - echo Building Project
+      - echo Finished Building
 
-artifacts:
-  files:
-    - target/*.jar # Adjust based on the output of your build
-
-env:
-  variables:
-    SONAR_TOKEN: "aedbc73ac39c1f6003dcfd993ff7d9bb46f22ae54" # You may want to set this in the AWS CodeBuild environment variables instead
+cache:
+  paths:
+    - "node_modules/**/*"

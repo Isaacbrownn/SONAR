@@ -12,8 +12,13 @@ phases:
   build:
     commands:
       - echo Logging in to SonarCloud..... 
-      - ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -X --define sonar.organization=isaacbrownn --define sonar.projectKey=Isaacbrownn_SONAR  --define sonar.host.url=https://sonarcloud.io --define sonar.token=6afb9f9bdf23103c6c38c12300ceea40001d2ae2
- post-build:
+      - ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -X --define sonar.organization=isaacbrownn --define sonar.projectKey=Isaacbrownn_SONAR  --define sonar.host.url=https://sonarcloud.io --define sonar.login=6afb9f9bdf23103c6c38c12300ceea40001d2ae2
+
+  pre_build:
+    commands:
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=Isaacbrownn_SONAR > analysis.json
+      - cat analysis.json
+  postbuild:
     commands:
       - echo Building Project
       - echo Finished Building

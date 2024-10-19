@@ -13,8 +13,7 @@ phases:
     commands:
       - echo Logging in to SonarCloud..... 
       - ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -X --define sonar.organization=isaacbrownn --define sonar.projectKey=Isaacbrownn_SONAR  --define sonar.host.url=https://sonarcloud.io --define sonar.token=6afb9f9bdf23103c6c38c12300ceea40001d2ae2
- 
-       post build:
+ post-build:
     commands:
       - echo Building Project
       - echo Finished Building

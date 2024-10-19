@@ -2,28 +2,28 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      java: corretto17 # Ensure you're using Java 17
     commands:
-      - echo Installing Java 17 and SonarScanner...
-      - apt-get update && apt-get install -y openjdk-17-jdk
-      - update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
-      - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-      - export PATH=$JAVA_HOME/bin:$PATH
-      - curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-      - unzip sonar-scanner.zip -d /opt/sonar-scanner
-      - export PATH=$PATH:/opt/sonar-scanner/sonar-scanner-4.8.0.2856-linux/bin
-
+      - echo "Installing dependencies..."
+      - mvn install # Adjust if you're using a different build tool
   pre_build:
     commands:
-      - echo Starting SonarCloud analysis...
-      - sleep 5  # Optional: Wait for 5 seconds before proceeding
-
+      - echo "Running SonarCloud analysis..."
   build:
     commands:
-      - echo Running SonarCloud analysis...
-      - sonar-scanner -X -Dsonar.organization=isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=aedbc73ac39c1f6003dcfd993ff7d9bb46f22ae54
-      - sleep 5  # Optional: Wait for 5 seconds after running the analysis
+      - echo "Building the project..."
+      - mvn package # Adjust if you're using a different build tool
+      - echo "Running SonarCloud scanner..."
+      - sonar-scanner -X -Dsonar.organization=isaacbrownn -Dsonar.projectKey=Isaacbrownn_SONAR -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN # Use environment variable for security
+  post_build:
+    commands:
+      - echo "Build completed."
 
 artifacts:
   files:
-    - '**/*'
-  discard-paths: yes
+    - target/*.jar # Adjust based on the output of your build
+
+env:
+  variables:
+    SONAR_TOKEN: "aedbc73ac39c1f6003dcfd993ff7d9bb46f22ae54" # You may want to set this in the AWS CodeBuild environment variables instead
